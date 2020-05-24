@@ -1,0 +1,31 @@
+{{#if loginError}}
+<div class="alert alert-danger" role="alert">{{loginError}}</div>
+{{/if}}
+
+{{#if successfulRegistration}}
+<div class="alert alert-success" role="alert">{{successfulRegistration}}</div>
+{{/if}}
+
+<div class="container login-form">
+  <div class="row justify-content-center pt-5">
+    <div class="col-12 col-lg-8 col-xl-6">
+      <form class="form-signin border rounded p-5 shadow" action="/login" method="post">
+        <div class="h5 mb-4 font-weight-normal">Вход в личный кабинет</div>
+        <input type="email" id="email" name="email" class="form-control mb-2 shadow-sm" placeholder="Email" required
+          autofocus>
+        <input type="password" id="inputPassword" name="password" class="form-control mb-3 shadow-sm"
+          placeholder="Пароль" required>
+        <!-- <div class="checkbox text-left">
+            <label>
+              <input class="shadow-sm" type="checkbox" value="remember-me">
+              <span>Запомнить меня</span>
+            </label>
+          </div> -->
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+        <button class="btn btn-success btn-block shadow" type="submit" name="submit">Войти</button>
+        <hr>
+        <p class="text-muted">Нет аккаунта? <a href="/register" class="text-decoration-none">Зарегистрируйтесь</a></p>
+      </form>
+    </div>
+  </div>
+</div>

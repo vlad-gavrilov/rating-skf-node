@@ -1,0 +1,112 @@
+<div class="content container-fluid py-3">
+    <div class="table-responsive-sm">
+        <table class="table table-sm table-bordered table-striped">
+            <thead>
+                <tr class="text-center">
+                    <th scope="col" class="align-middle"></th>
+                    <th scope="col" class="align-middle">1</th>
+                    <th scope="col" class="align-middle">2</th>
+                    <th scope="col" class="align-middle">3</th>
+                    <th scope="col" class="align-middle">4</th>
+                    <th scope="col" class="align-middle">5</th>
+                    <th scope="col" class="align-middle">6</th>
+                    <th scope="col" class="align-middle">7</th>
+                    <th scope="col" class="align-middle">8</th>
+                    <th scope="col" class="align-middle">9</th>
+                    <th scope="col" class="align-middle">10</th>
+                    <th scope="col" class="align-middle">Σ</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="text-center">
+                    <td class="align-middle">ОД</td>
+                    {{#each rating.OD}}
+                    <td class="align-middle">
+                        {{this}}
+                    </td>
+                    {{/each}}
+                    <td class="align-middle">{{rating.sumOD}}</td>
+                </tr>
+
+                <tr class="text-center">
+                    <td class="align-middle">ОП</td>
+                    {{#each rating.OP}}
+                    <td class="align-middle">
+                        {{this}}
+                    </td>
+                    {{/each}}
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="align-middle">{{rating.sumOP}}</td>
+                </tr>
+
+                <tr class="text-center">
+                    <td class="align-middle">НД</td>
+                    {{#each rating.ND}}
+                    <td class="align-middle">
+                        {{this}}
+                    </td>
+                    {{/each}}
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="align-middle">{{rating.sumND}}</td>
+                </tr>
+
+                <tr class="text-center">
+                    <td class="align-middle">НП</td>
+                    {{#each rating.NP}}
+                    <td class="align-middle">
+                        {{this}}
+                    </td>
+                    {{/each}}
+                    <td></td>
+                    <td class="align-middle">{{rating.sumNP}}</td>
+                </tr>
+
+                <tr class="text-center">
+                    <td class="align-middle">Р</td>
+                    {{#each rating.R}}
+                    <td class="align-middle">
+                        {{this}}
+                    </td>
+                    {{/each}}
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="align-middle">{{rating.sumR}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <table class="table table-sm table-bordered table-hover">
+        <tbody>
+            <tr>
+                <td>Итоговый показатель</td>
+                <td>{{rating.sumAll}}</td>
+            </tr>
+            <tr>
+                <td>Коэффициент повседневной деятельности</td>
+                <td>{{rating.coefficient}}</td>
+            </tr>
+            <tr>
+                <td>Итоговый показатель с учетом повседневной деятельности</td>
+                <td>{{rating.finalValueOfRating}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div> <a href="/rating/edit" class="btn btn-primary btn-block">Редактировать таблицу</a> </div>
+</div>

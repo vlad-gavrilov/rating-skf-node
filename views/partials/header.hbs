@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Jura:700&display=swap&subset=cyrillic,latin-ext"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c&display=swap&subset=cyrillic,latin-ext"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/styles/style.css">
+    <title>{{title}}</title>
+</head>
+
+<body>
+    <div id="wrapper">
+        <header class="header">
+            <nav class="navbar navbar-expand-lg navbar-light fixed-top shadow-sm">
+                <a class="navbar-brand" href="/">
+                    <span class="brand-name font-weight-bold">СКФ МТУСИ</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbar">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/">
+                                <i class="far fa-sticky-note"></i>
+                                Главная
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/rating">
+                                <i class="far fa-newspaper"></i>
+                                Рейтинг
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="/" role="button" data-toggle="dropdown">
+                                <i class="fas fa-user"></i>
+                                Информация
+                            </a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="/">Справка</a>
+                                <a class="dropdown-item" href="/">Контакты</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="/">Главный сайт</a>
+                            </div>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ml-auto">
+
+                        <li class="userphoto nav-item dropdown pl-3 media d-none d-lg-block">
+                            <a class="nav-link dropdown-toggle p-0" href="#" role="button" data-toggle="dropdown">
+                                <span class="navbar-text mr-1">
+                                    {{!-- <?php echo $this->userInfo['first_name'] . ' ' . $this->userInfo['last_name']; ?> --}}
+                                </span>
+                                <img src="/pictures/profile_default.jpg" class="rounded-circle" alt="photo"
+                                    height="38px" width="38px">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="/">Личный кабинет</a>
+                                <a class="dropdown-item" href="/edit">Редактировать данные</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="/rating">Смотреть рейтинг</a>
+                                <a class="dropdown-item" href="/rating/edit">Редактировать рейтинг</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="/logout">Выйти</a>
+                            </div>
+                        </li>
+                        <li class="nav-item d-lg-none">
+                            <span class="navbar-text">
+                                <a class="nav-link" href="/logout" role="button">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    Выход
+                                </a>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>

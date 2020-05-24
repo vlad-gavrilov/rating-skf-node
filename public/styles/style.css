@@ -1,0 +1,33 @@
+body {
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    background-color: #f9f9f9;
+  }
+  
+.brand-name {
+font-family: 'Jura', cursive;
+}
+
+.brand-name:hover {
+color: #71f;
+transition-property: color;
+transition-duration: 30s;
+transition-timing-function: ease-in;
+}
+
+.navbar {
+background-color: #efefef;
+}
+
+.form-signin {
+background-color: #efefef;
+}
+
+.login-form hr {
+border-top: 2px solid #999;
+width: 100%;
+margin-top: 30px;
+}
+
+.content {
+margin-top: 57px;
+}
