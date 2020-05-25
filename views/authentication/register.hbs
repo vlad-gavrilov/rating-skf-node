@@ -1,10 +1,7 @@
-{{#if errorLength}}
-<div class="alert alert-danger" role="alert">{{errorLength}}</div>
+{{#if registerError}}
+<div class="alert alert-danger" role="alert">{{registerError}}</div>
 {{/if}}
 
-{{#if errorLastname}}
-<div class="alert alert-danger" role="alert">{{errorLastname}}</div>
-{{/if}}
 
 <div class="row justify-content-center pt-5">
   <div class="col-12 col-lg-8 col-xl-6">
@@ -15,15 +12,15 @@
       <div class="form-row">
         <div class="form-group col-lg-4">
           <label for="lastName">Фамилия</label>
-          <input name="last_name" type="text" class="form-control" id="lastName" value="">
+          <input name="last_name" type="text" class="form-control" id="lastName" value="{{data.last_name}}">
         </div>
         <div class="form-group col-lg-4">
           <label for="firstName">Имя</label>
-          <input name="first_name" type="text" class="form-control" id="firstName" value="">
+          <input name="first_name" type="text" class="form-control" id="firstName" value="{{data.first_name}}">
         </div>
         <div class="form-group col-lg-4">
           <label for="patronymic">Отчество</label>
-          <input name="patronymic" type="text" class="form-control" id="patronymic" value="">
+          <input name="patronymic" type="text" class="form-control" id="patronymic" value="{{data.patronymic}}">
         </div>
       </div>
 
@@ -31,33 +28,32 @@
         <div class="form-group col-md-4">
           <label for="position">Должность</label>
           <select id="position" class="form-control" name="position">
-            <option value="1">ассистент</option>
-            <option value="2">преподаватель</option>
-            <option value="3">старший преподаватель
-            </option>
-            <option value="4">доцент</option>
-            <option value="5">профессор</option>
-            <option value="6">заведующий кафедрой
-            </option>
-            <option value="7">декан факультета</option>
+            <option value="1" {{#equal data.position 1}} selected {{/equal}}>ассистент</option>
+            <option value="2" {{#equal data.position 2}} selected {{/equal}}>преподаватель</option>
+            <option value="3" {{#equal data.position 3}} selected {{/equal}}>старший преподаватель</option>
+            <option value="4" {{#equal data.position 4}} selected {{/equal}}>доцент</option>
+            <option value="5" {{#equal data.position 5}} selected {{/equal}}>профессор</option>
+            <option value="6" {{#equal data.position 6}} selected {{/equal}}>заведующий кафедрой</option>
+            <option value="7" {{#equal data.position 7}} selected {{/equal}}>декан факультета</option>
           </select>
         </div>
         <div class="form-group col-md-4">
           <label for="academic_degree">Ученая степень</label>
           <select id="academic_degree" class="form-control" name="academic_degree">
-            <option value="1">младший научный сотрудник</option>
-            <option value="2">старший научный сотрудник</option>
-            <option value="3">кандидат наук</option>
-            <option value="4" selected>доктор наук</option>
-            <option value="5">член-корреспондент</option>
-            <option value="6">академик</option>
+            <option value="1" {{#equal data.academic_degree 1}} selected {{/equal}}>младший научный сотрудник</option>
+            <option value="2" {{#equal data.academic_degree 2}} selected {{/equal}}>старший научный сотрудник</option>
+            <option value="3" {{#equal data.academic_degree 3}} selected {{/equal}}>кандидат наук</option>
+            <option value="4" {{#equal data.academic_degree 4}} selected {{/equal}}>доктор наук</option>
+            <option value="5" {{#equal data.academic_degree 5}} selected {{/equal}}>член-корреспондент</option>
+            <option value="6" {{#equal data.academic_degree 6}} selected {{/equal}}>академик</option>
+          </select>
           </select>
         </div>
         <div class="form-group col-md-4">
           <label for="academic_title">Ученое звание</label>
           <select id="academic_title" class="form-control" name="academic_title">
-            <option value="1">доцент</option>
-            <option value="2">профессор</option>
+            <option value="1" {{#equal data.academic_title 1}} selected {{/equal}}>доцент</option>
+            <option value="2" {{#equal data.academic_title 2}} selected {{/equal}}>профессор</option>
           </select>
         </div>
       </div>
@@ -66,14 +62,10 @@
         <div class="form-group col-md-12">
           <label for="dep">Кафедра</label>
           <select id="dep" class="form-control" name="department">
-            <option value="1">инфокоммуникационных
-              технологий и систем связи</option>
-            <option value="2">информатики и
-              вычислительной техники</option>
-            <option value="3">общенаучной подготовки
-            </option>
-            <option value="4">
-              научно-исследовательской работы и инновационного развития</option>
+              <option value="1" {{#equal data.department 1}} selected {{/equal}}>инфокоммуникационныхтехнологий и систем связи</option>
+              <option value="2" {{#equal data.department 2}} selected {{/equal}}>информатики ивычислительной техники</option>
+              <option value="3" {{#equal data.department 3}} selected {{/equal}}>общенаучной подготовки</option>
+              <option value="4" {{#equal data.department 4}} selected {{/equal}}>научно-исследовательской работы и инновационного развития</option>
           </select>
         </div>
       </div>
@@ -81,14 +73,19 @@
       <div class="form-row">
         <div class="form-group col-md-12">
           <label for="inputEmail">Email</label>
-          <input name="email" type="email" class="form-control" id="inputEmail" value="">
+          <input name="email" type="email" class="form-control" id="inputEmail" value="{{data.email}}">
         </div>
       </div>
 
       <div class="form-row">
-        <div class="form-group col-md-12">
+        <div class="form-group col-md-6">
           <label for="password">Пароль</label>
           <input name="password" type="password" class="form-control" id="password" value="">
+        </div>
+
+        <div class="form-group col-md-6">
+          <label for="passwordAgain">Пароль еще раз</label>
+          <input name="passwordAgain" type="password" class="form-control" id="passwordAgain" value="">
         </div>
       </div>
 

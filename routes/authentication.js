@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
+const { validationResult } = require('express-validator');
+const { validatorsForRegistration } = require('../utils/validators');
 const User = require('../models/user');
 
 router.get('/login', (req, res) => {
@@ -9,31 +11,28 @@ router.get('/login', (req, res) => {
     title: 'Вход в личный кабинет',
     loginError: req.flash('loginError'),
     successfulRegistration: req.flash('successfulRegistration'),
+    loginEmail: req.session.loginEmail,
   });
 });
 
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
+
   const userData = await User.getUserByEmail(email);
-  if (userData) {
-    if (await bcrypt.compare(password, userData.password)) {
-      req.session.userId = userData.teacher_id;
-      req.session.isAuthenticated = true;
-      req.session.save(err => {
-        if (err) {
-          throw err;
-        }
-        res.redirect('/');
-      });
-    } else {
-      // Неверный пароль
-      req.flash('loginError', 'Неверные данные для входа на сайт');
-      res.redirect('/login');
-    }
+
+  if (userData && await bcrypt.compare(password, userData.password)) {
+    req.session.userId = userData.teacher_id;
+    req.session.isAuthenticated = true;
+    req.session.save(err => {
+      if (err) {
+        throw err;
+      }
+      res.redirect('/');
+    });
   } else {
-    // Несуществующий в БД email
     req.flash('loginError', 'Неверные данные для входа на сайт');
-    res.redirect('/login');
+    req.session.loginEmail = req.body.email;
+    return res.status(422).redirect('/login');
   }
 });
 
@@ -49,45 +48,28 @@ router.get('/register', (req, res) => {
     title: 'Регистрация',
     errorLength: req.flash('errorLength'),
     errorLastname: req.flash('errorLastname'),
+    registerError: req.flash('registerError'),
+    data: req.session.userData,
   });
 });
 
-router.post('/register', async (req, res) => {
-  const newUser = {};
+router.post('/register', validatorsForRegistration, async (req, res) => {
+  const errors = validationResult(req);
 
-  newUser.last_name = req.body.last_name;
-  newUser.first_name = req.body.first_name;
-  newUser.patronymic = req.body.patronymic;
-  newUser.email = req.body.email;
-  newUser.position = Number(req.body.position);
-  newUser.academic_degree = Number(req.body.academic_degree);
-  newUser.academic_title = Number(req.body.academic_title);
-  newUser.department = Number(req.body.department);
-  // newUser.password = req.body.password;
-  newUser.password = await bcrypt.hash(req.body.password, 10);
-
-  var errors = false;
-
-  if (req.body.password.length < 6) {
-    req.flash('errorLength', 'Пароль должен быть не менее 6 символов');
-    errors = true;
+  if (!errors.isEmpty()) {
+    req.flash('registerError', errors.array()[0].msg);
+    req.session.userData = req.body;
+    return res.status(422).redirect('/register');
   }
 
-  if (!newUser.last_name) {
-    req.flash('errorLastname', 'Введите фамилию');
-    errors = true;
-  }
+  req.body.password = await bcrypt.hash(req.body.password, 10);
 
-  if (errors) {
-    res.redirect('/register');
-  } else {
-    try {
-      await User.createUser(newUser);
-      req.flash('successfulRegistration', 'Регистрация прошла успешно');
-      res.redirect('/login');
-    } catch (e) {
-      console.log(e);
-    }
+  try {
+    await User.createUser(req.body);
+    req.flash('successfulRegistration', 'Регистрация прошла успешно');
+    res.redirect('/login');
+  } catch (e) {
+    console.log(e);
   }
 });
 
