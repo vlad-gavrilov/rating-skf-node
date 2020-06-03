@@ -49,22 +49,15 @@ exports.validatorsForRegistration = [
     ,
 
     body('email')
-        .isEmail().withMessage('Введите корректный email')
         .normalizeEmail()
+        .isEmail().withMessage('Введите корректный email')
     ,
     body('password')
-        .trim()
         .isLength({ min: 6, max: 32 }).withMessage('Длина пароля должна быть не менее 6 символов')
         .isAscii().withMessage('Недопустимые символы в пароле')
     ,
     body('passwordAgain')
-        .trim()
-        .custom((value, { req }) => {
-            if (value !== req.body.password) {
-                throw new Error('Введенные пароли не совпадают')
-            }
-            return true
-        })
+        .custom((value, { req }) => req.body.password === value).withMessage('Введенные пароли не совпадают')
 ]
 
 exports.validatorsForEditingOfUser = [
@@ -119,26 +112,21 @@ exports.validatorsForEditingOfUser = [
         .toInt()
     ,
     body('email')
-        .isEmail().withMessage('Введите корректный email')
         .normalizeEmail()
+        .isEmail().withMessage('Введите корректный email')
 ]
 
 exports.validatorsForEditingOfPassword = [
     body('password')
-        .trim()
-        .isLength({ min: 6, max: 32 }).withMessage('Длина пароля должна быть не менее 6 символов')
+        .isLength({ min: 6 }).withMessage('Длина пароля должна быть не менее 6 символов')
+        .isLength({ max: 32 }).withMessage('Длина пароля должна быть не более 32 символов')
         .isAscii().withMessage('Недопустимые символы в пароле')
     ,
     body('passwordAgain')
-        .trim()
-        .custom((value, { req }) => {
-            if (value !== req.body.password) {
-                throw new Error('Введенные пароли не совпадают')
-            }
-            return true
-        })
+        .custom((value, { req }) => req.body.password === value).withMessage('Введенные пароли не совпадают')
 ]
 
 /*
 TODO email is in use (both cases)
+.bail()
 */

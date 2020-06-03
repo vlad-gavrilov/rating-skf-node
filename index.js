@@ -14,9 +14,9 @@ const authenticationRoutes = require('./routes/authentication');
 
 const userMiddleware = require('./middleware/user');
 const varMiddleware = require('./middleware/vars');
+const fileMiddleware = require('./middleware/file');
 const authMiddleware = require('./middleware/auth');
 const errorHandler = require('./middleware/errorHandler');
-
 
 const PORT = process.env.PORT || 3000;
 
@@ -26,14 +26,14 @@ const hbs = exphbs.create({
     defaultLayout: 'main',
     extname: 'hbs',
     helpers: require('./utils/hbs-helpers')
-})
+});
 
 app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
 app.disable('x-powered-by');
 
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 
 // Настройка хранения сессии в БД
@@ -56,16 +56,11 @@ app.use(flash());
 app.use(varMiddleware);
 app.use(userMiddleware);
 app.use(authMiddleware);
-
-
+app.use(fileMiddleware.single('avatar'));
 
 app.use('/', cabinetRoutes);
 app.use('/rating', ratingRoutes);
 app.use('/', authenticationRoutes);
-// app.use('/courses', coursesRoutes)
-// app.use('/card', cardRoutes)
-// app.use('/orders', ordersRoutes)
-// app.use('/auth', authRoutes)
 
 app.use(errorHandler);
 

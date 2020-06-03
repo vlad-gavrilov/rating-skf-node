@@ -27,6 +27,7 @@ router.get('/', async (req, res) => {
 
   res.render('rating/index', {
     title: 'Рейтинг',
+    user: req.user,
     rating
   });
 });
@@ -46,6 +47,8 @@ router.get('/edit', async (req, res) => {
   delete rating.R.teacher_id;
 
   res.render('rating/edit', {
+    title: 'Редактировать рейтинг',
+    user: req.user,
     rating
   });
 });

@@ -58,10 +58,15 @@
                         <li class="userphoto nav-item dropdown pl-3 media d-none d-lg-block">
                             <a class="nav-link dropdown-toggle p-0" href="#" role="button" data-toggle="dropdown">
                                 <span class="navbar-text mr-1">
-                                    {{!-- <?php echo $this->userInfo['first_name'] . ' ' . $this->userInfo['last_name']; ?> --}}
+                                    {{user.first_name}} {{user.patronymic}}
                                 </span>
+                                {{#if user.avatar}}
+                                <img src="/pictures/{{user.avatar}}" class="rounded-circle" alt="photo" height="38px"
+                                    width="38px">
+                                {{else}}
                                 <img src="/pictures/profile_default.jpg" class="rounded-circle" alt="photo"
                                     height="38px" width="38px">
+                                {{/if}}
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">
                                 <a class="dropdown-item" href="/">Личный кабинет</a>

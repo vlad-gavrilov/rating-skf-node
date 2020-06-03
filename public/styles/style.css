@@ -15,7 +15,7 @@ transition-timing-function: ease-in;
 }
 
 .navbar {
-background-color: #efefef;
+background-color: #e6e6e6;
 }
 
 .form-signin {
@@ -30,4 +30,9 @@ margin-top: 30px;
 
 .content {
 margin-top: 57px;
+}
+
+.avatar {
+  max-width: 250px;
+  height: auto;
 }

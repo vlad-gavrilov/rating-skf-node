@@ -1,0 +1,45 @@
+<div class="content container-fluid py-3">
+    <div class="row mb-3">
+        <div class="col">
+            {{#if editSuccess}}
+            <div class="alert alert-success" role="alert">{{editSuccess}}</div>
+            {{/if}}
+
+            {{#if editError}}
+            <div class="alert alert-danger" role="alert">{{editError}}</div>
+            {{/if}}
+
+
+            <div class="row">
+                <div class="col-12 col-lg-3 text-center">
+
+                    {{#if avatar}}
+                    <img class="avatar img-thumbnail" src="/pictures/{{avatar}}" alt="avatar">
+                    {{else}}
+                    <img class="avatar img-thumbnail" src="/pictures/profile_default.jpg" alt="avatar">
+                    {{/if}}
+
+                </div>
+                <div class="col-12 col-lg-9">
+                    <form action="/edit/photo?_csrf={{csrfToken}}" method="post" enctype="multipart/form-data">
+                        <div class="custom-file">
+                            <input type="file" name="avatar" class="custom-file-input" id="avatar">
+                            <label class="custom-file-label" data-browse="Обзор" for="avatar">Выберите фото</label>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="col-12">
+                                <button name="submit" type="submit" class="btn btn-success btn-block mt-4">
+                                    Сохранить фото
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+</div>

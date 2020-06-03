@@ -14,6 +14,7 @@ router.get('/', async (req, res) => {
   user.first_name = info.first_name;
   user.patronymic = info.patronymic;
   user.coefficient = info.coefficient;
+  user.avatar = info.avatar;
 
   user.position = await User.getPosition(info.position);
   user.title = await User.getTitle(info.academic_title);
@@ -59,6 +60,7 @@ router.route('/edit/password')
   .get((req, res) => {
     res.render('cabinet/password', {
       title: 'Изменить пароль',
+      user: req.user,
       editError: req.flash('editError'),
       editSuccess: req.flash('editSuccess'),
     });
@@ -82,5 +84,25 @@ router.route('/edit/password')
       console.log(e);
     }
   });
+
+router.route('/edit/photo')
+  .get((req, res) => {
+    res.render('cabinet/photo', {
+      title: 'Изменить фотографию',
+      // editError: req.flash('editError'),
+      editSuccess: req.flash('editSuccess'),
+      avatar: req.user.avatar,
+      user: req.user,
+    });
+  })
+  .post(async (req, res) => {
+    try {
+      User.updatePhoto(req.user.id, req.file.filename);
+      req.flash('editSuccess', 'Фото успешно изменено');
+      res.redirect('/edit/photo');
+    } catch (e) {
+      console.log(e)
+    }
+  })
 
 module.exports = router;

@@ -251,6 +251,20 @@ class User {
         }));
 
     }
+
+    static updatePhoto(id, filename) {
+        return new Promise((resolve, reject) => {
+            const sql = 'UPDATE Teachers SET avatar = ? WHERE id = ?';
+            const values = [filename, id];
+            connection.query(sql, values, function (error, results, fields) {
+                if (error) {
+                    reject(error);
+                    return;
+                }
+                resolve(results[0]);
+            });
+        })
+    }
 }
 
 module.exports = User;

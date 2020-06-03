@@ -13,6 +13,7 @@ module.exports = async function(req, res, next) {
   req.user.first_name = info.first_name;
   req.user.patronymic = info.patronymic;
   req.user.coefficient = info.coefficient;
+  req.user.avatar = info.avatar;
 
   req.user.position = await User.getPosition(info.position);
   req.user.title = await User.getTitle(info.academic_title);
