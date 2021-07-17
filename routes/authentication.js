@@ -1,9 +1,11 @@
 const express = require('express');
-const router = express.Router();
 const bcrypt = require('bcryptjs');
 const { validationResult } = require('express-validator');
 const { validatorsForRegistration } = require('../utils/validators');
+
 const User = require('../models/user');
+
+const router = express.Router();
 
 router.get('/login', (req, res) => {
   res.render('authentication/login', {
@@ -23,17 +25,16 @@ router.post('/login', async (req, res) => {
   if (userData && await bcrypt.compare(password, userData.password)) {
     req.session.userId = userData.teacher_id;
     req.session.isAuthenticated = true;
-    req.session.save(err => {
+    req.session.save((err) => {
       if (err) {
         throw err;
       }
-      res.redirect('/');
     });
-  } else {
-    req.flash('loginError', 'Неверные данные для входа на сайт');
-    req.session.loginEmail = req.body.email;
-    return res.status(422).redirect('/login');
+    return res.redirect('/');
   }
+  req.flash('loginError', 'Неверные данные для входа на сайт');
+  req.session.loginEmail = req.body.email;
+  return res.status(422).redirect('/login');
 });
 
 router.get('/logout', (req, res) => {
@@ -67,9 +68,10 @@ router.post('/register', validatorsForRegistration, async (req, res) => {
   try {
     await User.createUser(req.body);
     req.flash('successfulRegistration', 'Регистрация прошла успешно');
-    res.redirect('/login');
+    return res.redirect('/login');
   } catch (e) {
     console.log(e);
+    throw e;
   }
 });
 

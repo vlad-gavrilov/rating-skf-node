@@ -1,4 +1,4 @@
---drop database rating_skf; create database rating_skf; use rating_skf;
+-- drop database rating_skf; create database rating_skf; use rating_skf;
 
 CREATE TABLE `Degrees` (
   `degree_id` TINYINT(50) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -43,6 +43,7 @@ CREATE TABLE `Teachers` (
   `coefficient` TINYINT(5) UNSIGNED NOT NULL DEFAULT '1',
   `department` TINYINT(50) UNSIGNED NOT NULL DEFAULT '1',
   `status` TINYINT(5) NOT NULL DEFAULT '0',
+  `avatar` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `Teachers_ibfk_1` FOREIGN KEY (`position`) REFERENCES `Positions` (`position_id`) ON DELETE CASCADE,
   CONSTRAINT `Teachers_ibfk_2` FOREIGN KEY (`department`) REFERENCES `Departments` (`department_id`) ON DELETE CASCADE,
@@ -63,62 +64,11 @@ CREATE TABLE `Auth` (
 
 
 
-CREATE TABLE `ND_table` (
+CREATE TABLE `Rating` (
   `teacher_id` int(11) NOT NULL,
-  `nd1` TINYINT(50) UNSIGNED DEFAULT '0',
+  `teacher_rating` varchar(255) NOT NULL DEFAULT '{"OD":{"1":0,"2":0,"3":0,"4":0,"5":0,"6":0,"7":0,"8":0,"9":0,"10":0},"OP":{"1":0,"2":0,"3":0,"4":0,"5":0},"ND":{"1":0},"NP":{"1":0,"2":0,"3":0,"4":0,"5":0,"6":0,"7":0,"8":0,"9":0},"R":{"1":0,"2":0,"3":0}}',
   PRIMARY KEY (`teacher_id`),
-  CONSTRAINT `ND_table_ibfk_1` FOREIGN KEY (`teacher_id`) REFERENCES `Teachers` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-CREATE TABLE `NP_table` (
-  `teacher_id` int(11) NOT NULL,
-  `np1` TINYINT(50) UNSIGNED DEFAULT '0',
-  `np2` TINYINT(50) UNSIGNED DEFAULT '0',
-  `np3` TINYINT(50) UNSIGNED DEFAULT '0',
-  `np4` TINYINT(50) UNSIGNED DEFAULT '0',
-  `np5` TINYINT(50) UNSIGNED DEFAULT '0',
-  `np6` TINYINT(50) UNSIGNED DEFAULT '0',
-  `np7` TINYINT(50) UNSIGNED DEFAULT '0',
-  `np8` TINYINT(50) UNSIGNED DEFAULT '0',
-  `np9` TINYINT(50) UNSIGNED DEFAULT '0',
-  PRIMARY KEY (`teacher_id`),
-  CONSTRAINT `NP_table_ibfk_1` FOREIGN KEY (`teacher_id`) REFERENCES `Teachers` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-CREATE TABLE `OD_table` (
-  `teacher_id` int(11) NOT NULL,
-  `od1` TINYINT(50) UNSIGNED DEFAULT '0',
-  `od2` TINYINT(50) UNSIGNED DEFAULT '0',
-  `od3` TINYINT(50) UNSIGNED DEFAULT '0',
-  `od4` TINYINT(50) UNSIGNED DEFAULT '0',
-  `od5` TINYINT(50) UNSIGNED DEFAULT '0',
-  `od6` TINYINT(50) UNSIGNED DEFAULT '0',
-  `od7` TINYINT(50) UNSIGNED DEFAULT '0',
-  `od8` TINYINT(50) UNSIGNED DEFAULT '0',
-  `od9` TINYINT(50) UNSIGNED DEFAULT '0',
-  `od10` TINYINT(50) UNSIGNED DEFAULT '0',
-  PRIMARY KEY (`teacher_id`),
-  CONSTRAINT `OD_table_ibfk_1` FOREIGN KEY (`teacher_id`) REFERENCES `Teachers` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-CREATE TABLE `OP_table` (
-  `teacher_id` int(11) NOT NULL,
-  `op1` TINYINT(50) UNSIGNED DEFAULT '0',
-  `op2` TINYINT(50) UNSIGNED DEFAULT '0',
-  `op3` TINYINT(50) UNSIGNED DEFAULT '0',
-  `op4` TINYINT(50) UNSIGNED DEFAULT '0',
-  `op5` TINYINT(50) UNSIGNED DEFAULT '0',
-  PRIMARY KEY (`teacher_id`),
-  CONSTRAINT `OP_table_ibfk_1` FOREIGN KEY (`teacher_id`) REFERENCES `Teachers` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-CREATE TABLE `R_table` (
-  `teacher_id` int(11) NOT NULL,
-  `r1` TINYINT(50) UNSIGNED DEFAULT '0',
-  `r2` TINYINT(50) UNSIGNED DEFAULT '0',
-  `r3` TINYINT(50) UNSIGNED DEFAULT '0',
-  PRIMARY KEY (`teacher_id`),
-  CONSTRAINT `R_table_ibfk_1` FOREIGN KEY (`teacher_id`) REFERENCES `Teachers` (`id`) ON DELETE CASCADE
+  CONSTRAINT `Rating_ibfk_1` FOREIGN KEY (`teacher_id`) REFERENCES `Teachers` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -157,51 +107,23 @@ INSERT INTO `Statuses` VALUES
 
 
 INSERT INTO `Teachers` VALUES
-(1,'Кравченко','Болеслав','Артёмович',2,2,1,1,2,0),
-(2,'Марков','Зенон','Леонидович',5,4,2,1,3,0),
-(3,'Денисов','Николай','Сергеевич',3,4,1,2,3,1),
-(4,'Савельева','Ольга','Анатолиевна',5,4,1,2,2,2),
-(5,'Фокин','Петр','Артёмович',5,3,2,1,1,0);
+(1,'Кравченко','Болеслав','Артёмович',2,2,1,1,2,0,NULL),
+(2,'Марков','Зенон','Леонидович',5,4,2,1,3,0,NULL),
+(3,'Денисов','Николай','Сергеевич',3,4,1,2,3,1,NULL),
+(4,'Савельева','Ольга','Анатолиевна',5,4,1,2,2,2,NULL),
+(5,'Фокин','Петр','Артёмович',5,3,2,1,1,0,NULL);
 
 INSERT INTO `Auth` VALUES
-(1,'sample1@mail.com','d8578edf8458ce06fbc5bb76a58c5ca4'),
-(2,'sample2@mail.com','a152e841783914146e4bcd4f39100686'),
-(3,'sample3@mail.com','d8578edf8458ce06fbc5bb76a58c5ca4'),
-(4,'sample4@mail.com','a152e841783914146e4bcd4f39100686'),
-(5,'sample5@mail.com','d8578edf8458ce06fbc5bb76a58c5ca4');
+(1,'sample1@mail.com','$2b$10$gvXZ7zuFrni9nSQu/mnyhOsQQSxRfW5zWZCNgMHtKg1Jlz0mZnDTS'),
+(2,'sample2@mail.com','$2b$10$gvXZ7zuFrni9nSQu/mnyhOsQQSxRfW5zWZCNgMHtKg1Jlz0mZnDTS'),
+(3,'sample3@mail.com','$2b$10$gvXZ7zuFrni9nSQu/mnyhOsQQSxRfW5zWZCNgMHtKg1Jlz0mZnDTS'),
+(4,'sample4@mail.com','$2b$10$gvXZ7zuFrni9nSQu/mnyhOsQQSxRfW5zWZCNgMHtKg1Jlz0mZnDTS'),
+(5,'sample5@mail.com','$2b$10$gvXZ7zuFrni9nSQu/mnyhOsQQSxRfW5zWZCNgMHtKg1Jlz0mZnDTS');
 
 
-INSERT INTO `ND_table` VALUES
-(1,5),
-(2,2),
-(3,0),
-(4,13),
-(5,9);
-
-INSERT INTO `NP_table` VALUES
-(1,3,1,2,0,4,7,0,9,0),
-(2,0,0,0,0,4,0,0,5,0),
-(3,0,0,1,0,4,0,0,5,0),
-(4,0,0,0,0,4,15,0,5,0),
-(5,0,4,0,0,4,0,0,5,0);
-
-INSERT INTO `OD_table` VALUES
-(1,3,4,4,0,0,3,0,0,0,0),
-(2,10,4,7,0,0,0,5,4,10,0),
-(3,10,4,0,0,0,0,5,4,10,0),
-(4,10,4,0,0,0,0,5,4,0,0),
-(5,10,4,0,0,1,0,5,4,10,0);
-
-INSERT INTO `OP_table` VALUES
-(1,0,7,10,1,3),
-(2,7,8,3,10,8),
-(3,5,8,23,10,8),
-(4,5,8,0,10,8),
-(5,5,8,3,10,8);
-
-INSERT INTO `R_table` VALUES
-(1,0,8,2),
-(2,8,10,3),
-(3,10,3,7),
-(4,3,8,10),
-(5,9,8,3);
+INSERT INTO `Rating` VALUES
+(1,'{"OD":{"1":0,"2":0,"3":0,"4":0,"5":0,"6":0,"7":0,"8":0,"9":0,"10":0},"OP":{"1":0,"2":0,"3":0,"4":0,"5":0},"ND":{"1":0},"NP":{"1":1,"2":0,"3":0,"4":0,"5":0,"6":0,"7":0,"8":0,"9":0},"R":{"1":0,"2":0,"3":0}}'),
+(2,'{"OD":{"1":0,"2":0,"3":0,"4":0,"5":0,"6":0,"7":2,"8":0,"9":0,"10":0},"OP":{"1":0,"2":0,"3":0,"4":0,"5":0},"ND":{"1":0},"NP":{"1":0,"2":0,"3":0,"4":2,"5":0,"6":0,"7":0,"8":0,"9":0},"R":{"1":0,"2":0,"3":0}}'),
+(3,'{"OD":{"1":0,"2":0,"3":0,"4":0,"5":3,"6":0,"7":0,"8":0,"9":0,"10":0},"OP":{"1":0,"2":0,"3":0,"4":0,"5":0},"ND":{"1":0},"NP":{"1":0,"2":0,"3":0,"4":0,"5":3,"6":0,"7":0,"8":0,"9":0},"R":{"1":3,"2":0,"3":0}}'),
+(4,'{"OD":{"1":0,"2":0,"3":0,"4":0,"5":4,"6":0,"7":0,"8":0,"9":0,"10":0},"OP":{"1":4,"2":0,"3":0,"4":0,"5":0},"ND":{"1":0},"NP":{"1":0,"2":0,"3":0,"4":0,"5":0,"6":0,"7":0,"8":0,"9":0},"R":{"1":0,"2":0,"3":0}}'),
+(5,'{"OD":{"1":0,"2":0,"3":0,"4":0,"5":0,"6":0,"7":0,"8":0,"9":0,"10":0},"OP":{"1":0,"2":0,"3":0,"4":0,"5":0},"ND":{"1":0},"NP":{"1":0,"2":0,"3":0,"4":5,"5":0,"6":0,"7":0,"8":0,"9":0},"R":{"1":0,"2":0,"3":0}}');

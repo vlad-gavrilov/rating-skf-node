@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const exphbs = require('express-handlebars');
@@ -18,14 +19,16 @@ const fileMiddleware = require('./middleware/file');
 const authMiddleware = require('./middleware/auth');
 const errorHandler = require('./middleware/errorHandler');
 
+const hbsHelpers = require('./utils/hbs-helpers');
+
 const PORT = process.env.PORT || 3000;
 
 const app = express();
 
 const hbs = exphbs.create({
-    defaultLayout: 'main',
-    extname: 'hbs',
-    helpers: require('./utils/hbs-helpers')
+  defaultLayout: 'main',
+  extname: 'hbs',
+  helpers: hbsHelpers,
 });
 
 app.engine('hbs', hbs.engine);
@@ -37,18 +40,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 
 // Настройка хранения сессии в БД
-var sessionStore = new MySQLStore({
-    host: DSN.HOST_NAME,
-    user: DSN.USER_NAME,
-    password: DSN.PASSWORD,
-    database: DSN.DATABASE_NAME
+const sessionStore = new MySQLStore({
+  host: DSN.HOST_NAME,
+  user: DSN.USER_NAME,
+  password: DSN.PASSWORD,
+  database: DSN.DATABASE_NAME,
 });
 // Регистрация сессии
 app.use(session({
-    secret: 'some secret',
-    resave: false,
-    saveUninitialized: false,
-    store: sessionStore
+  secret: 'some secret',
+  resave: false,
+  saveUninitialized: false,
+  store: sessionStore,
 }));
 app.use(csurf());
 app.use(flash());
@@ -64,14 +67,10 @@ app.use('/', authenticationRoutes);
 
 app.use(errorHandler);
 
-function start() {
-    try {
-        app.listen(PORT, () => {
-            console.log(`Server is running on port ${PORT}\n\n`)
-        })
-    } catch (e) {
-        console.log(e)
-    }
+try {
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}\n`);
+  });
+} catch (e) {
+  console.log(e);
 }
-
-start();

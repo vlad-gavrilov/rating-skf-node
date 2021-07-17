@@ -1,5 +1,5 @@
-module.exports = function(req, res, next) {
+module.exports = (req, res) => {
   res.status(404).render('404', {
-    title: 'Страница не найдена'
+    title: 'Страница не найдена',
   });
-}
+};
